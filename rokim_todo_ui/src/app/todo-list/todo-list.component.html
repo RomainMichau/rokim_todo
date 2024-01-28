@@ -1,0 +1,32 @@
+<div *ngIf="todos_per_category" class="todo-container">
+    <h2>TODO List</h2>
+    <button mat-fab color="primary" (click)="openDialog()">
+        <mat-icon>create</mat-icon>
+    </button>
+    <ul class="categories-list">
+        <li *ngFor="let category of todos_per_category | keyvalue" class="category-item">
+            <div class="category-header">
+                <button (click)="toggleCategoryExpand(category.key)"
+                        class="toggle-button">{{ isCategoryMinimized(category.key) ? '+' : '-' }}
+                </button>
+                <span class="category-title">{{ category.key }}</span>
+                <mat-slide-toggle  (click)="toggleDoneTodosForCategory(category.key)"><span class="ctexta">Show Done</span></mat-slide-toggle>
+            </div>
+            <ul class="todos-list" *ngIf="!isCategoryMinimized(category.key)">
+                <li *ngFor="let todo of getFilteredTodos(category.key)" class="todo-item" [class.done]="todo.done_at">
+                    <div class="todo-details" (click)="toggleTodoDetails(todo.id)">
+                        <div class="todo-title">{{ todo.title }}</div>
+                        <div *ngIf="!isTodoDetailsMinimized(todo.id)" class="todo-info">
+                            <pre class="todo-description" *ngIf="todo.description">{{ todo.description }}</pre>
+                            <div class="todo-created-at">Created at: {{ formatDateTime(todo.created_at) }}</div>
+                            <div class="todo-done-at" *ngIf="todo.done_at">Done at: {{ formatDateTime(todo.done_at) }}</div>
+                            <button mat-raised-button color="primary" *ngIf="!todo.done_at" (click)="markAsDone(todo.id)">Done</button>
+                            <button mat-raised-button color="primary" *ngIf="todo.done_at" (click)="markAsTodo(todo.id)">Todo</button>
+                            <button mat-raised-button color="warn" (click)="deleteTodo(todo)">Delete</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

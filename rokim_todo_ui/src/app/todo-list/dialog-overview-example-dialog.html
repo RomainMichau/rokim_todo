@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>New todo</h1>
+<div mat-dialog-content>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput [(ngModel)]="data.title">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput [(ngModel)]="data.description"></textarea>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Category</mat-label>
+            <input matInput [(ngModel)]="data.category" [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of input.categories" [value]="option">
+                    {{option}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

@@ -1,0 +1,103 @@
+.todo-container {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.categories-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-item {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.toggle-button {
+    background-color: #ddd;
+    border: 1px solid #aaa;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.action-buttons {
+    display: flex;
+}
+
+.action-buttons button {
+    margin-left: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.todos-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.todo-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.todo-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.todo-description {
+    color: #555;
+}
+
+.todo-created-at,
+.todo-done-at {
+    color: #888;
+    font-size: 0.8em;
+}
+
+.done {
+    background-color: #e0f7fa; /* Light blue background for done todos */
+    border-color: #00bcd4; /* Border color for done todos */
+}
+
+/* ... previous styles ... */
+
+.todo-details {
+    cursor: pointer;
+}
+
+
+.todo-item.active .todo-info {
+    display: block;
+}
+
+.ctexta {
+    color: #333;
+}
