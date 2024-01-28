@@ -1,0 +1,15 @@
+.gitignore
+.openapi-generator-ignore
+README.md
+api.module.ts
+api/api.ts
+api/todoController.service.ts
+configuration.ts
+encoder.ts
+git_push.sh
+index.ts
+model/createTodoRequest.ts
+model/models.ts
+model/todo.ts
+param.ts
+variables.ts
