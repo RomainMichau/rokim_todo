@@ -30,7 +30,7 @@ jobs:
           submodules: ''
 
       - name: Build image
-        run: cd ./rokim_todo && docker build . --file Dockerfile --tag $IMAGE_API_NAME --label "runnumber=${GITHUB_RUN_ID}"
+        run: cd ./rokim_todo && pwd && ls. && docker build . --file Dockerfile --tag $IMAGE_API_NAME --label "runnumber=${GITHUB_RUN_ID}"
 
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
