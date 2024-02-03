@@ -104,7 +104,7 @@ import { ApiModule, Configuration } from '';
         useFactory: (authService: AuthService) => new Configuration(
           {
             basePath: environment.apiUrl,
-            accessToken: authService.getAccessToken.bind(authService)
+            access_token: authService.getAccessToken.bind(authService)
           }
         ),
         deps: [AuthService],

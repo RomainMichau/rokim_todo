@@ -1,12 +1,10 @@
-use actix_web::body::BoxBody;
 use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::body::BoxBody;
 use actix_web::http::header::ContentType;
 use chrono::{DateTime, Utc};
-use clap::builder::Str;
-use tokio_postgres::{NoTls, Error, Client};
 use serde::Serialize;
+use tokio_postgres::{Client, Error, NoTls};
 use utoipa::ToSchema;
-
 
 #[derive(Serialize, ToSchema)]
 pub struct Todo {

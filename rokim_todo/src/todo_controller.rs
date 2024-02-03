@@ -2,6 +2,7 @@ use actix_web::{delete, get, HttpResponse, post, put, Responder, web};
 use utoipa::ToSchema;
 
 use crate::{AppState, db_client};
+use crate::openid_middleware::Authenticated;
 
 #[derive(serde::Serialize, ToSchema)]
 struct TodoResponse {
@@ -36,7 +37,8 @@ responses(
 ),
 )]
 #[get("/api/v1/todos")]
-async fn get_todos(state: web::Data<AppState>) -> actix_web::Result<impl Responder> {
+async fn get_todos(state: web::Data<AppState>, authenticated: Authenticated) -> actix_web::Result<impl Responder> {
+    let user = &authenticated.id;
     let todos = state.db_client.get_todos().await.unwrap();
     Ok(HttpResponse::Created().json(todos))
 }
