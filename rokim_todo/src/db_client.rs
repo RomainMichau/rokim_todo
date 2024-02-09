@@ -1,6 +1,6 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
 use actix_web::body::BoxBody;
 use actix_web::http::header::ContentType;
+use actix_web::{HttpRequest, HttpResponse, Responder};
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 use tokio_postgres::{Client, Error, NoTls};
@@ -15,7 +15,6 @@ pub struct Todo {
     pub(crate) category: String,
     pub(crate) title: String,
 }
-
 
 impl Responder for Todo {
     type Body = BoxBody;
@@ -35,8 +34,17 @@ pub(crate) struct DbClient {
 }
 
 impl DbClient {
-    pub async fn new(host: String, port: u16, db_name: String, user: String, password: String) -> Result<DbClient, Error> {
-        let connection_string = format!("host={} user={} password={} dbname={db_name} port={}", host, user, password, port);
+    pub async fn new(
+        host: String,
+        port: u16,
+        db_name: String,
+        user: String,
+        password: String,
+    ) -> Result<DbClient, Error> {
+        let connection_string = format!(
+            "host={} user={} password={} dbname={db_name} port={}",
+            host, user, password, port
+        );
         let (client, connection) =
             tokio_postgres::connect(connection_string.as_str(), NoTls).await?;
         tokio::spawn(async move {
@@ -48,7 +56,13 @@ impl DbClient {
     }
 
     pub async fn get_todos(&self) -> Result<Vec<Todo>, Error> {
-        let rows = self.client.query("SELECT id, description, done_at, created_at, category, title FROM todos", &[]).await?;
+        let rows = self
+            .client
+            .query(
+                "SELECT id, description, done_at, created_at, category, title FROM todos",
+                &[],
+            )
+            .await?;
         let mut todos = Vec::new();
         for row in rows {
             let todo = Todo {
@@ -116,21 +130,14 @@ impl DbClient {
         Ok(todo)
     }
 
-    pub async fn delete_todo(
-        &self,
-        id: i64,
-    ) -> Result<(), Error> {
-        self.client.execute(
-            "DELETE FROM todos WHERE id = $1",
-            &[&id],
-        ).await?;
+    pub async fn delete_todo(&self, id: i64) -> Result<(), Error> {
+        self.client
+            .execute("DELETE FROM todos WHERE id = $1", &[&id])
+            .await?;
         Ok(())
     }
 
-    pub async fn mark_todo_as_done(
-        &self,
-        id: i64,
-    ) -> Result<Todo, Error> {
+    pub async fn mark_todo_as_done(&self, id: i64) -> Result<Todo, Error> {
         let row = self.client.query_one(
             "UPDATE todos SET done_at = $1 WHERE id = $2 RETURNING id, description, done_at, created_at, category, title",
             &[&Utc::now(), &id],
@@ -149,10 +156,7 @@ impl DbClient {
         Ok(todo)
     }
 
-    pub async fn mark_todo_as_undone(
-        &self,
-        id: i64,
-    ) -> Result<Todo, Error> {
+    pub async fn mark_todo_as_undone(&self, id: i64) -> Result<Todo, Error> {
         let row = self.client.query_one(
             "UPDATE todos SET done_at = $1 WHERE id = $2 RETURNING id, description, done_at, created_at, category, title",
             &[&None::<DateTime<Utc>>, &id],

@@ -1,8 +1,7 @@
-use actix_web::{delete, get, HttpResponse, post, put, Responder, web};
+use actix_web::{delete, get, post, put, web, HttpResponse, Responder};
 use utoipa::ToSchema;
 
-use crate::{AppState, db_client};
-use crate::openid_middleware::Authenticated;
+use crate::{db_client, AppState};
 
 #[derive(serde::Serialize, ToSchema)]
 struct TodoResponse {
@@ -22,12 +21,15 @@ responses(
 ),
 )]
 #[post("/api/v1/todos")]
-async fn create_todos(state: web::Data<AppState>, todos: web::Json<CreateTodoRequest>) -> actix_web::Result<impl Responder> {
-    let todo = state.db_client.create_todo(
-        &todos.description,
-        &todos.category,
-        &todos.title,
-    ).await.unwrap();
+async fn create_todos(
+    state: web::Data<AppState>,
+    todos: web::Json<CreateTodoRequest>,
+) -> actix_web::Result<impl Responder> {
+    let todo = state
+        .db_client
+        .create_todo(&todos.description, &todos.category, &todos.title)
+        .await
+        .unwrap();
     Ok(web::Json(todo))
 }
 
@@ -37,8 +39,7 @@ responses(
 ),
 )]
 #[get("/api/v1/todos")]
-async fn get_todos(state: web::Data<AppState>, authenticated: Authenticated) -> actix_web::Result<impl Responder> {
-    let user = &authenticated.id;
+async fn get_todos(state: web::Data<AppState>) -> actix_web::Result<impl Responder> {
     let todos = state.db_client.get_todos().await.unwrap();
     Ok(HttpResponse::Created().json(todos))
 }
@@ -49,7 +50,10 @@ responses(
 ),
 )]
 #[delete("/api/v1/todos/{id}")]
-async fn delete_todo(state: web::Data<AppState>, id: web::Path<i64>) -> actix_web::Result<impl Responder> {
+async fn delete_todo(
+    state: web::Data<AppState>,
+    id: web::Path<i64>,
+) -> actix_web::Result<impl Responder> {
     state.db_client.delete_todo(id.into_inner()).await.unwrap();
     Ok(HttpResponse::NoContent())
 }
@@ -60,13 +64,21 @@ responses(
 ),
 )]
 #[put("/api/v1/todos/{id}")]
-async fn update_todo(state: web::Data<AppState>, id: web::Path<i64>, todo: web::Json<CreateTodoRequest>) -> actix_web::Result<impl Responder> {
-    let todo = state.db_client.update_todo(
-        id.into_inner(),
-        &todo.description,
-        &todo.title,
-        &todo.category,
-    ).await.unwrap();
+async fn update_todo(
+    state: web::Data<AppState>,
+    id: web::Path<i64>,
+    todo: web::Json<CreateTodoRequest>,
+) -> actix_web::Result<impl Responder> {
+    let todo = state
+        .db_client
+        .update_todo(
+            id.into_inner(),
+            &todo.description,
+            &todo.title,
+            &todo.category,
+        )
+        .await
+        .unwrap();
     Ok(web::Json(todo))
 }
 
@@ -76,8 +88,15 @@ responses(
 ),
 )]
 #[post("/api/v1/todos/{id}/done")]
-async fn mark_todo_as_done(state: web::Data<AppState>, id: web::Path<i64>) -> actix_web::Result<impl Responder> {
-    let todo = state.db_client.mark_todo_as_done(id.into_inner()).await.unwrap();
+async fn mark_todo_as_done(
+    state: web::Data<AppState>,
+    id: web::Path<i64>,
+) -> actix_web::Result<impl Responder> {
+    let todo = state
+        .db_client
+        .mark_todo_as_done(id.into_inner())
+        .await
+        .unwrap();
     Ok(web::Json(todo))
 }
 
@@ -87,7 +106,14 @@ responses(
 ),
 )]
 #[post("/api/v1/todos/{id}/to_do")]
-async fn mark_todo_as_undone(state: web::Data<AppState>, id: web::Path<i64>) -> actix_web::Result<impl Responder> {
-    let todo = state.db_client.mark_todo_as_undone(id.into_inner()).await.unwrap();
+async fn mark_todo_as_undone(
+    state: web::Data<AppState>,
+    id: web::Path<i64>,
+) -> actix_web::Result<impl Responder> {
+    let todo = state
+        .db_client
+        .mark_todo_as_undone(id.into_inner())
+        .await
+        .unwrap();
     Ok(web::Json(todo))
 }

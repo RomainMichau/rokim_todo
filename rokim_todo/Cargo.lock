@@ -182,6 +182,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "actix_web_openidconnect"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a2120dcbf9631079feefad2b49eee5adea718b6433f5a2ef0f1c511dc19d01e7"
+dependencies = [
+ "actix-web",
+ "anyhow",
+ "derive_more",
+ "futures-util",
+ "log",
+ "openidconnect",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "url",
+]
+
+[[package]]
 name = "addr2line"
 version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1828,6 +1846,7 @@ name = "rokim_todo"
 version = "0.1.0"
 dependencies = [
  "actix-web",
+ "actix_web_openidconnect",
  "anyhow",
  "chrono",
  "clap",
@@ -1835,7 +1854,6 @@ dependencies = [
  "env_logger",
  "futures-util",
  "log",
- "openidconnect",
  "serde",
  "serde_json",
  "tokio",
