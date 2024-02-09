@@ -19,10 +19,10 @@ jobs:
           rustup component add clippy
           rustup component add rustfmt
       - name: Check build
-        run: cargo check
+        run: cd ./rokim_todo && cargo check
       - name: Run fmt
-        run: cargo fmt -- --check
+        run: cd ./rokim_todo && cargo fmt -- --check
       - name: Run clippy
-        run: cargo clippy -- -D warnings
+        run: cd ./rokim_todo && cargo clippy -- -D warnings
       - name: Run tests
-        run: cargo test
+        run: cd ./rokim_todo && cargo test
