@@ -10,7 +10,6 @@ on:
   push:
     tags:
       - v*
-  pull_request:
   # This creates an environment variable called `IMAGE_API_NAME ` with the value `ghtoken_product_demo`.
 env:
   IMAGE_API_NAME: rokim_todo_api
