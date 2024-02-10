@@ -30,11 +30,11 @@ struct Cli {
     db_port: u16,
     #[arg(short = 'd', long)]
     db_name: String,
-    #[arg(short, long)]
+    #[arg(long)]
     open_id_client_id: String,
-    #[arg(short, long)]
+    #[arg(long)]
     open_id_client_secret: String,
-    #[arg(short, long)]
+    #[arg(long)]
     issuer_url: String,
 }
 
