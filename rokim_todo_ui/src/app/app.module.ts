@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {DialogOverviewExampleDialog, TodoListComponent} from './todo-list/todo-list.component';
@@ -15,6 +15,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatIconModule} from "@angular/material/icon";
+import {RedirectInterceptor} from "./redirect-302.interceptor";
 @NgModule({
     declarations: [
         AppComponent,
@@ -41,7 +42,13 @@ import {MatIconModule} from "@angular/material/icon";
         MatRadioModule,
         MatSlideToggleModule,
     ],
-    providers: [],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RedirectInterceptor,
+            multi: true
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
