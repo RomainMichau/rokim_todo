@@ -68,10 +68,7 @@ impl DbClient {
             let todo = Todo {
                 id: row.get(0),
                 description: row.get(1),
-                done_at: match row.get(2) {
-                    Some(done_at) => Some(done_at),
-                    None => None,
-                },
+                done_at: row.get(2),
                 created_at: row.get(3),
                 category: row.get(4),
                 title: row.get(5),
@@ -94,10 +91,7 @@ impl DbClient {
         let todo = Todo {
             id: row.get(0),
             description: row.get(1),
-            done_at: match row.get(2) {
-                Some(done_at) => Some(done_at),
-                None => None,
-            },
+            done_at: row.get(2),
             created_at: row.get(3),
             category: row.get(4),
             title: row.get(5),
@@ -119,10 +113,7 @@ impl DbClient {
         let todo = Todo {
             id: row.get(0),
             description: row.get(1),
-            done_at: match row.get(2) {
-                Some(done_at) => Some(done_at),
-                None => None,
-            },
+            done_at: row.get(2),
             created_at: row.get(3),
             category: row.get(4),
             title: row.get(5),
@@ -145,10 +136,7 @@ impl DbClient {
         let todo = Todo {
             id: row.get(0),
             description: row.get(1),
-            done_at: match row.get(2) {
-                Some(done_at) => Some(done_at),
-                None => None,
-            },
+            done_at: row.get(2),
             created_at: row.get(3),
             category: row.get(4),
             title: row.get(5),
@@ -164,10 +152,7 @@ impl DbClient {
         let todo = Todo {
             id: row.get(0),
             description: row.get(1),
-            done_at: match row.get(2) {
-                Some(done_at) => Some(done_at),
-                None => None,
-            },
+            done_at: row.get(2),
             created_at: row.get(3),
             category: row.get(4),
             title: row.get(5),
